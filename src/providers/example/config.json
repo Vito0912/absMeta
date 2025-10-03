@@ -1,0 +1,53 @@
+{
+  "id": "example",
+  "name": "Example Provider",
+  "description": "An example metadata provider that demonstrates the framework capabilities",
+  "url": "https://example.com",
+  "parameters": [
+    {
+      "name": "lang",
+      "required": true,
+      "validation": {
+        "type": "enum",
+        "values": [
+          "en",
+          "de",
+          "fr",
+          "es"
+        ]
+      },
+      "description": "Language code for the search results"
+    },
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 50
+      },
+      "description": "Maximum number of results to return"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "subtitle",
+    "author",
+    "narrator",
+    "publisher",
+    "publishedYear",
+    "description",
+    "cover",
+    "isbn",
+    "asin",
+    "genres",
+    "series",
+    "language",
+    "duration"
+  ],
+  "comments": [
+    "This is an example provider for demonstration purposes",
+    "It returns mock data and does not connect to a real API",
+    "Use this as a template for creating new providers"
+  ]
+}
