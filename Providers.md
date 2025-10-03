@@ -23,7 +23,7 @@ Total Providers: 2
 
 | Name | Type | Validation | Description |
 |------|------|------------|-------------|
-| `market` | enum | [germany, sweden, finland, denmark, norway, poland, netherlands, austria, switzerland] | Market/country for the search (BookBeat region) |
+| `market` | enum | [austria, belgium, bulgaria, croatia, cyprus, czechia, denmark, estonia, finland, france, germany, greece, hungary, ireland, italy, latvia, lithuania, luxembourg, malta, netherlands, norway, poland, portugal, romania, slovakia, slovenia, spain, sweden, switzerland, united-kingdom] | Market/country for the search (BookBeat region) |
 
 #### Optional Parameters
 
@@ -45,7 +45,7 @@ Total Providers: 2
 ### Example Request
 
 ```
-GET /bookbeat/market:germany/search?title=example&author=author
+GET /bookbeat/market:austria/search?title=example&author=author
 ```
 
 ### Comments
