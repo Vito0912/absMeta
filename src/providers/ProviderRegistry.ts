@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { pathToFileURL } from 'url'
 import { BaseProvider } from './BaseProvider'
 import { ProviderConfig } from '../types'
 
@@ -52,7 +53,7 @@ export class ProviderRegistry {
         const configContent = fs.readFileSync(configPath, 'utf-8')
         const config = JSON.parse(configContent) as ProviderConfig
 
-        const providerModule = await import(indexPath)
+        const providerModule = await import(pathToFileURL(indexPath).href)
         const ProviderClass = providerModule.default || providerModule.Provider
 
         if (!ProviderClass) {

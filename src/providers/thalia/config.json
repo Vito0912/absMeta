@@ -1,0 +1,34 @@
+{
+  "id": "thalia",
+  "name": "Thalia",
+  "description": "Fetches metadata from Thalia's public search API - a major book retailer in Germany.",
+  "url": "https://www.thalia.de/",
+  "parameters": [
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 30
+      },
+      "description": "Maximum number of results to return (default: 3, max: 30)"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "subtitle",
+    "author",
+    "narrator",
+    "description",
+    "cover",
+    "isbn",
+    "series",
+    "language",
+    "publishedYear",
+    "publisher",
+    "duration",
+    "tags"
+  ],
+  "comments": []
+}
