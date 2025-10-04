@@ -5,7 +5,7 @@ Total Providers: 2
 ## Table of Contents
 
 - [BookBeat](#bookbeat)
-- [Example Provider](#example)
+- [Storytel](#storytel)
 
 ---
 
@@ -55,13 +55,13 @@ GET /bookbeat/market:austria/search?title=example&author=author
 
 ---
 
-## Example Provider
+## Storytel
 
-**ID:** `example`
+**ID:** `storytel`
 
-**Description:** An example metadata provider that demonstrates the framework capabilities
+**Description:** Fetches metadata from Storytel's public search API.
 
-**Metadata-URL:** [https://example.com](https://example.com)
+**Metadata-URL:** [https://www.storytel.com/](https://www.storytel.com/)
 
 ### Parameters
 
@@ -69,13 +69,14 @@ GET /bookbeat/market:austria/search?title=example&author=author
 
 | Name | Type | Validation | Description |
 |------|------|------------|-------------|
-| `lang` | enum | [en, de, fr, es] | Language code for the search results |
+| `language` | enum | [en, sv, no, dk, fi, is, de, es, fr, it, pl, nl, pt, bg, tr, ru, ar, hi, id, th] | Language/locale for the search (ISO language code) |
 
 #### Optional Parameters
 
 | Name | Type | Validation | Description |
 |------|------|------------|-------------|
-| `limit` | int | 1-50 | Maximum number of results to return |
+| `limit` | int | 1-10 | Maximum number of results to return (default: 3, max: 10) |
+| `type` | enum | [audiobook, ebook, all] | Type of content to search for (default: all) |
 
 ### Returned Fields
 
@@ -83,28 +84,25 @@ GET /bookbeat/market:austria/search?title=example&author=author
 - `subtitle`
 - `author`
 - `narrator`
-- `publisher`
-- `publishedYear`
 - `description`
 - `cover`
 - `isbn`
-- `asin`
-- `genres`
 - `series`
 - `language`
+- `publishedYear`
+- `publisher`
 - `duration`
+- `tags`
 
 ### Example Request
 
 ```
-GET /example/lang:en/search?title=example&author=author
+GET /storytel/language:en/search?title=example&author=author
 ```
 
 ### Comments
 
-- This is an example provider for demonstration purposes
-- It returns mock data and does not connect to a real API
-- Use this as a template for creating new providers
+- Titles and series information are automatically cleaned using language-specific patterns.
 
 ---
 

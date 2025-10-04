@@ -1,6 +1,7 @@
 {
   "id": "bookbeat",
   "name": "BookBeat",
+  "available": true,
   "description": "Fetches metadata from BookBeat's public search API.",
   "url": "https://www.bookbeat.com/",
   "parameters": [
@@ -49,24 +50,12 @@
       "required": false,
       "validation": {
         "type": "enum",
-        "values": [
-          "true",
-          "false"
-        ]
+        "values": ["true", "false"]
       },
       "description": "Whether to include erotic books (default: false)"
     }
   ],
-  "returnedFields": [
-    "title",
-    "author",
-    "description",
-    "cover",
-    "isbn",
-    "series",
-    "language",
-    "publishedYear"
-  ],
+  "returnedFields": ["title", "author", "description", "cover", "isbn", "series", "language", "publishedYear"],
   "comments": [
     "Data might be unrelated a bit.",
     "There are made up to 4 requests per search, so consider ratelimiting if self-hosted! Please check you local laws regarding web scraping and API usage."

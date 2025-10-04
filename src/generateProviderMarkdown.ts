@@ -19,7 +19,7 @@ function generateProviderMarkdown(): void {
       try {
         const configContent = fs.readFileSync(configPath, 'utf-8')
         const config = JSON.parse(configContent) as ProviderConfig
-        configs.push(config)
+        if (config.available !== false) configs.push(config)
       } catch (error) {
         console.error(`Failed to read config for ${dir}:`, error)
       }

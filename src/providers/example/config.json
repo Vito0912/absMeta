@@ -1,6 +1,7 @@
 {
   "id": "example",
   "name": "Example Provider",
+  "available": false,
   "description": "An example metadata provider that demonstrates the framework capabilities",
   "url": "https://example.com",
   "parameters": [
@@ -9,12 +10,7 @@
       "required": true,
       "validation": {
         "type": "enum",
-        "values": [
-          "en",
-          "de",
-          "fr",
-          "es"
-        ]
+        "values": ["en", "de", "fr", "es"]
       },
       "description": "Language code for the search results"
     },

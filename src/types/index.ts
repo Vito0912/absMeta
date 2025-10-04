@@ -43,6 +43,7 @@ export interface ProviderParameter {
 export interface ProviderConfig {
   id: string
   name: string
+  available?: boolean
   description: string
   url: string
   parameters: ProviderParameter[]
