@@ -1,0 +1,68 @@
+{
+    "id": "storytel",
+    "name": "Storytel",
+    "description": "Fetches metadata from Storytel's public search API.",
+    "url": "https://www.storytel.com/",
+    "parameters": [
+        {
+            "name": "language",
+            "required": true,
+            "validation": {
+                "type": "enum",
+                "values": [
+                    "en",
+                    "sv",
+                    "no",
+                    "dk",
+                    "fi",
+                    "is",
+                    "de",
+                    "es",
+                    "fr",
+                    "it",
+                    "pl",
+                    "nl",
+                    "pt",
+                    "bg",
+                    "tr",
+                    "ru",
+                    "ar",
+                    "hi",
+                    "id",
+                    "th"
+                ]
+            },
+            "description": "Language/locale for the search (ISO language code)"
+        },
+        {
+            "name": "limit",
+            "required": false,
+            "validation": {
+                "type": "int",
+                "min": 1,
+                "max": 10
+            },
+            "description": "Maximum number of results to return (default: 3, max: 10)"
+        }
+    ],
+    "returnedFields": [
+        "title",
+        "subtitle",
+        "author",
+        "narrator",
+        "description",
+        "cover",
+        "isbn",
+        "series",
+        "language",
+        "publishedYear",
+        "publisher",
+        "duration",
+        "tags"
+    ],
+    "comments": [
+        "Searches for audiobooks and ebooks on Storytel platform.",
+        "Titles and series information are automatically cleaned using language-specific patterns.",
+        "Please check your local laws regarding web scraping and API usage."
+    ]
+}
