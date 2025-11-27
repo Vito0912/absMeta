@@ -1,12 +1,13 @@
 # Metadata Providers
 
-Total Providers: 6
+Total Providers: 7
 
 ## Table of Contents
 
 - [ARD Audiothek](#ardaudiothek)
 - [Big Finish](#bigfinish)
 - [BookBeat](#bookbeat)
+- [Graphic Audio](#graphicaudio)
 - [Hardcover](#hardcover)
 - [LibriVox](#librivox)
 - [Storytel](#storytel)
@@ -135,6 +136,48 @@ GET /bookbeat/market:austria/search?title=example&author=author
 
 - Data might be unrelated a bit.
 - There are made up to 4 requests per search, so consider ratelimiting if self-hosted! Please check you local laws regarding web scraping and API usage.
+
+---
+
+## Graphic Audio
+
+**ID:** `graphicaudio`
+
+**Description:** Fetches metadata from Graphic Audio's catalog. Graphic Audio produces dramatized audiobooks with full cast, music, and sound effects.
+
+**Metadata-URL:** [https://www.graphicaudiointernational.net/](https://www.graphicaudiointernational.net/)
+
+### Parameters
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `limit` | int | 1-20 | Maximum number of results to return (default: 10, max: 20) |
+
+### Returned Fields
+
+- `title`
+- `subtitle`
+- `author`
+- `narrator`
+- `description`
+- `cover`
+- `isbn`
+- `asin`
+- `genres`
+- `series`
+- `publishedYear`
+
+### Example Request
+
+```
+GET /graphicaudio/search?title=example&author=author
+```
+
+### Comments
+
+- Credits to https://github.com/binyaminyblatt/graphicaudio_scraper
 
 ---
 

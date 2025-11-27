@@ -8,3 +8,4 @@ dist/
 *.sqlite3
 .vscode/
 .idea/
+data
