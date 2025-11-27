@@ -1,11 +1,92 @@
 # Metadata Providers
 
-Total Providers: 2
+Total Providers: 5
 
 ## Table of Contents
 
+- [ARD Audiothek](#ardaudiothek)
+- [Big Finish](#bigfinish)
 - [BookBeat](#bookbeat)
+- [Hardcover](#hardcover)
 - [Storytel](#storytel)
+
+---
+
+## ARD Audiothek
+
+**ID:** `ardaudiothek`
+
+**Description:** Fetches audiobook metadata from the ARD Audiothek (public broadcasters in Germany).
+
+**Metadata-URL:** [https://www.ardaudiothek.de/](https://www.ardaudiothek.de/)
+
+### Parameters
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `limit` | int | 1-20 | Maximum number of results to return (default: 5, max: 20) |
+
+### Returned Fields
+
+- `title`
+- `author`
+- `description`
+- `cover`
+- `publisher`
+- `genres`
+- `tags`
+- `series`
+- `language`
+
+### Example Request
+
+```
+GET /ardaudiothek/search?title=example&author=author
+```
+
+### Comments
+
+- German language only provider.
+
+---
+
+## Big Finish
+
+**ID:** `bigfinish`
+
+**Description:** Fetches audiobook metadata from Big Finish Productions (Doctor Who, Torchwood, and other audio dramas).
+
+**Metadata-URL:** [https://www.bigfinish.com/](https://www.bigfinish.com/)
+
+### Parameters
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `limit` | int | 1-10 | Maximum number of results to return (default: 5, max: 10) |
+
+### Returned Fields
+
+- `title`
+- `author`
+- `narrator`
+- `description`
+- `cover`
+- `isbn`
+- `series`
+- `language`
+- `publishedYear`
+- `publisher`
+- `duration`
+
+### Example Request
+
+```
+GET /bigfinish/search?title=example&author=author
+```
 
 ---
 
@@ -52,6 +133,51 @@ GET /bookbeat/market:austria/search?title=example&author=author
 
 - Data might be unrelated a bit.
 - There are made up to 4 requests per search, so consider ratelimiting if self-hosted! Please check you local laws regarding web scraping and API usage.
+
+---
+
+## Hardcover
+
+**ID:** `hardcover`
+
+**Description:** Book metadata from Hardcover.app
+
+**Metadata-URL:** [https://hardcover.app](https://hardcover.app)
+
+### Parameters
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `language` | string | - | Filter by language code (e.g., 'en', 'de') |
+| `limit` | int | 1-25 | Maximum number of results to return (default: 10, max: 25) |
+
+### Returned Fields
+
+- `title`
+- `subtitle`
+- `author`
+- `narrator`
+- `description`
+- `cover`
+- `isbn`
+- `asin`
+- `publisher`
+- `publishedYear`
+- `language`
+- `series`
+- `tags`
+
+### Example Request
+
+```
+GET /hardcover/search?title=example&author=author
+```
+
+### Comments
+
+- The searching seems to be a bit broken, not finding results that exist.
 
 ---
 

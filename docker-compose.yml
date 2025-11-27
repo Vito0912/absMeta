@@ -1,0 +1,12 @@
+services:
+  absmetadata:
+    build: .
+    container_name: ghcr.io/vito0912/absMeta
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - HARDCOVER_TOKEN=${HARDCOVER_TOKEN}
+    volumes:
+      - ./data:/app/data

@@ -60,7 +60,7 @@ export default class BookBeatProvider extends BaseProvider {
       if (suggestCache) {
         try {
           suggestions = JSON.parse(suggestCache)
-        } catch { }
+        } catch {}
       }
     }
 
@@ -83,7 +83,7 @@ export default class BookBeatProvider extends BaseProvider {
         try {
           const parsed = JSON.parse(bookCache)
           bookData = parsed._embedded?.books?.[0]
-        } catch { }
+        } catch {}
       } else {
         const bookRes = await httpClient.get(bookUrl)
         if (bookRes.status !== 200) continue
