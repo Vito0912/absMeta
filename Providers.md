@@ -1,6 +1,6 @@
 # Metadata Providers
 
-Total Providers: 5
+Total Providers: 6
 
 ## Table of Contents
 
@@ -8,6 +8,7 @@ Total Providers: 5
 - [Big Finish](#bigfinish)
 - [BookBeat](#bookbeat)
 - [Hardcover](#hardcover)
+- [LibriVox](#librivox)
 - [Storytel](#storytel)
 
 ---
@@ -49,6 +50,7 @@ GET /ardaudiothek/search?title=example&author=author
 ### Comments
 
 - German language only provider.
+- Credits https://github.com/h43lb1t0/ARD_Audiothek_provider for inital idea in Python
 
 ---
 
@@ -178,6 +180,46 @@ GET /hardcover/search?title=example&author=author
 ### Comments
 
 - The searching seems to be a bit broken, not finding results that exist.
+
+---
+
+## LibriVox
+
+**ID:** `librivox`
+
+**Description:** Fetches metadata from LibriVox's public domain audiobook API. LibriVox provides free public domain audiobooks read by volunteers.
+
+**Metadata-URL:** [https://librivox.org/](https://librivox.org/)
+
+### Parameters
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `genre` | string | - | Filter results by genre (e.g., 'Fiction', 'Science Fiction', 'Poetry') |
+| `limit` | int | 1-20 | Maximum number of results to return (default: 10, max: 20) |
+
+### Returned Fields
+
+- `title`
+- `author`
+- `description`
+- `cover`
+- `genres`
+- `language`
+- `duration`
+- `publishedYear`
+
+### Example Request
+
+```
+GET /librivox/search?title=example&author=author
+```
+
+### Comments
+
+- Use ^ prefix in title/author to anchor search to beginning of term
 
 ---
 

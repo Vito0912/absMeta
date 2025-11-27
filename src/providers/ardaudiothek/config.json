@@ -28,6 +28,7 @@
     "language"
   ],
   "comments": [
-    "German language only provider."
+    "German language only provider.",
+    "Credits https://github.com/h43lb1t0/ARD_Audiothek_provider for inital idea in Python"
   ]
 }

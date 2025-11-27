@@ -1,0 +1,40 @@
+{
+  "id": "librivox",
+  "name": "LibriVox",
+  "available": true,
+  "description": "Fetches metadata from LibriVox's public domain audiobook API. LibriVox provides free public domain audiobooks read by volunteers.",
+  "url": "https://librivox.org/",
+  "parameters": [
+    {
+      "name": "genre",
+      "required": false,
+      "validation": {
+        "type": "string"
+      },
+      "description": "Filter results by genre (e.g., 'Fiction', 'Science Fiction', 'Poetry')"
+    },
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 20
+      },
+      "description": "Maximum number of results to return (default: 10, max: 20)"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "author",
+    "description",
+    "cover",
+    "genres",
+    "language",
+    "duration",
+    "publishedYear"
+  ],
+  "comments": [
+    "Use ^ prefix in title/author to anchor search to beginning of term"
+  ]
+}
