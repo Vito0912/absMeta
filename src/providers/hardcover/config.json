@@ -1,0 +1,46 @@
+{
+  "id": "hardcover",
+  "name": "Hardcover",
+  "available": true,
+  "description": "Book metadata from Hardcover.app",
+  "url": "https://hardcover.app",
+  "requiredEnv": ["HARDCOVER_TOKEN"],
+  "parameters": [
+    {
+      "name": "language",
+      "required": false,
+      "validation": {
+        "type": "string"
+      },
+      "description": "Filter by language code (e.g., 'en', 'de')"
+    },
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 25
+      },
+      "description": "Maximum number of results to return (default: 10, max: 25)"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "subtitle",
+    "author",
+    "narrator",
+    "description",
+    "cover",
+    "isbn",
+    "asin",
+    "publisher",
+    "publishedYear",
+    "language",
+    "series",
+    "tags"
+  ],
+  "comments": [
+    "The searching seems to be a bit broken, not finding results that exist."
+  ]
+}

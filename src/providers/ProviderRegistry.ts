@@ -53,6 +53,21 @@ export class ProviderRegistry {
         const configContent = fs.readFileSync(configPath, 'utf-8')
         const config = JSON.parse(configContent) as ProviderConfig
 
+        if (config.requiredEnv && config.requiredEnv.length > 0) {
+          const missingEnvVars = config.requiredEnv.filter((envVar) => !process.env[envVar])
+          if (missingEnvVars.length > 0) {
+            console.warn(
+              `Provider ${config.name} (${config.id}) disabled: missing env vars: ${missingEnvVars.join(', ')}`
+            )
+            config.available = false
+          }
+        }
+
+        if (config.available === false) {
+          console.log(`Skipping disabled provider: ${config.name} (${config.id})`)
+          continue
+        }
+
         const providerModule = await import(pathToFileURL(indexPath).href)
         const ProviderClass = providerModule.default || providerModule.Provider
 

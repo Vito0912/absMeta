@@ -49,6 +49,7 @@ export interface ProviderConfig {
   parameters: ProviderParameter[]
   returnedFields: (keyof BookMetadata)[]
   comments: string[]
+  requiredEnv?: string[]
 }
 
 export interface ParsedParameters {
