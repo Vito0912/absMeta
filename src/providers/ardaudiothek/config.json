@@ -28,8 +28,6 @@
     "language"
   ],
   "comments": [
-    "German language only provider.",
-    "Author extraction relies on heuristics based on common title formats.",
-    "Best results for audiobooks that are standalone program sets."
+    "German language only provider."
   ]
 }
