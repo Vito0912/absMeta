@@ -1,0 +1,44 @@
+{
+  "id": "audioteka",
+  "name": "Audioteka",
+  "available": true,
+  "description": "Fetches audiobook metadata from Audioteka, a popular audiobook platform in Central and Eastern Europe.",
+  "url": "https://audioteka.com/",
+  "parameters": [
+    {
+      "name": "lang",
+      "required": true,
+      "validation": {
+        "type": "enum",
+        "values": ["pl", "cz", "de", "sk", "lt"]
+      },
+      "description": "Language/region code: pl (Polish), cz (Czech), de (German), sk (Slovak), lt (Lithuanian)"
+    },
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 20
+      },
+      "description": "Maximum number of results to return (default: 5, max: 20)"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "author",
+    "narrator",
+    "description",
+    "cover",
+    "publisher",
+    "genres",
+    "tags",
+    "series",
+    "language",
+    "duration"
+  ],
+  "comments": [
+    "Credits https://github.com/lakafior/audioteka-abs for the original implementation."
+  ]
+}

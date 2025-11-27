@@ -1,10 +1,11 @@
 # Metadata Providers
 
-Total Providers: 8
+Total Providers: 9
 
 ## Table of Contents
 
 - [ARD Audiothek](#ardaudiothek)
+- [Audioteka](#audioteka)
 - [Big Finish](#bigfinish)
 - [BookBeat](#bookbeat)
 - [Goodreads](#goodreads)
@@ -53,6 +54,54 @@ GET /ardaudiothek/search?title=example&author=author
 
 - German language only provider.
 - Credits https://github.com/h43lb1t0/ARD_Audiothek_provider for inital idea in Python
+
+---
+
+## Audioteka
+
+**ID:** `audioteka`
+
+**Description:** Fetches audiobook metadata from Audioteka, a popular audiobook platform in Central and Eastern Europe.
+
+**Metadata-URL:** [https://audioteka.com/](https://audioteka.com/)
+
+### Parameters
+
+#### Required Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `lang` | enum | [pl, cz, de, sk, lt] | Language/region code: pl (Polish), cz (Czech), de (German), sk (Slovak), lt (Lithuanian) |
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `limit` | int | 1-20 | Maximum number of results to return (default: 5, max: 20) |
+
+### Returned Fields
+
+- `title`
+- `author`
+- `narrator`
+- `description`
+- `cover`
+- `publisher`
+- `genres`
+- `tags`
+- `series`
+- `language`
+- `duration`
+
+### Example Request
+
+```
+GET /audioteka/lang:pl/search?title=example&author=author
+```
+
+### Comments
+
+- Credits https://github.com/lakafior/audioteka-abs for the original implementation.
 
 ---
 
