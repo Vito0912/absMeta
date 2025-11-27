@@ -1,12 +1,13 @@
 # Metadata Providers
 
-Total Providers: 7
+Total Providers: 8
 
 ## Table of Contents
 
 - [ARD Audiothek](#ardaudiothek)
 - [Big Finish](#bigfinish)
 - [BookBeat](#bookbeat)
+- [Goodreads](#goodreads)
 - [Graphic Audio](#graphicaudio)
 - [Hardcover](#hardcover)
 - [LibriVox](#librivox)
@@ -136,6 +137,49 @@ GET /bookbeat/market:austria/search?title=example&author=author
 
 - Data might be unrelated a bit.
 - There are made up to 4 requests per search, so consider ratelimiting if self-hosted! Please check you local laws regarding web scraping and API usage.
+
+---
+
+## Goodreads
+
+**ID:** `goodreads`
+
+**Description:** Book metadata from Goodreads. Note: Covers may be low quality or missing. API is deprecated but still functional.
+
+**Metadata-URL:** [https://www.goodreads.com](https://www.goodreads.com)
+
+### Parameters
+
+#### Optional Parameters
+
+| Name | Type | Validation | Description |
+|------|------|------------|-------------|
+| `limit` | int | 1-20 | Maximum number of results to return (default: 10, max: 20) |
+
+### Returned Fields
+
+- `title`
+- `subtitle`
+- `author`
+- `description`
+- `cover`
+- `isbn`
+- `publisher`
+- `publishedYear`
+- `language`
+- `series`
+- `genres`
+
+### Example Request
+
+```
+GET /goodreads/search?title=example&author=author
+```
+
+### Comments
+
+- Covers may be low quality or missing due to API limitations
+- Credits to https://github.com/ahobsonsayers/abs-tract
 
 ---
 

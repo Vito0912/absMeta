@@ -1,0 +1,37 @@
+{
+  "id": "goodreads",
+  "name": "Goodreads",
+  "available": true,
+  "description": "Book metadata from Goodreads. Note: Covers may be low quality or missing. API is deprecated but still functional.",
+  "url": "https://www.goodreads.com",
+  "requiredEnv": ["GOODREADS_API_KEY"],
+  "parameters": [
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 20
+      },
+      "description": "Maximum number of results to return (default: 10, max: 20)"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "subtitle",
+    "author",
+    "description",
+    "cover",
+    "isbn",
+    "publisher",
+    "publishedYear",
+    "language",
+    "series",
+    "genres"
+  ],
+  "comments": [
+    "Covers may be low quality or missing due to API limitations",
+    "Credits to https://github.com/ahobsonsayers/abs-tract"
+  ]
+}
