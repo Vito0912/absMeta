@@ -1,0 +1,35 @@
+{
+  "id": "ardaudiothek",
+  "name": "ARD Audiothek",
+  "available": true,
+  "description": "Fetches audiobook metadata from the ARD Audiothek (public broadcasters in Germany).",
+  "url": "https://www.ardaudiothek.de/",
+  "parameters": [
+    {
+      "name": "limit",
+      "required": false,
+      "validation": {
+        "type": "int",
+        "min": 1,
+        "max": 20
+      },
+      "description": "Maximum number of results to return (default: 5, max: 20)"
+    }
+  ],
+  "returnedFields": [
+    "title",
+    "author",
+    "description",
+    "cover",
+    "publisher",
+    "genres",
+    "tags",
+    "series",
+    "language"
+  ],
+  "comments": [
+    "German language only provider.",
+    "Author extraction relies on heuristics based on common title formats.",
+    "Best results for audiobooks that are standalone program sets."
+  ]
+}
