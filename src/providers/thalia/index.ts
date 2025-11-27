@@ -72,6 +72,7 @@ export default class ThaliaProvider extends BaseProvider {
     return books
   }
 
+  // @ts-ignore
   private mapThaliaToMetadata(result: ThaliaSearchResult, params: ParsedParameters): BookMetadata {
     return undefined as any
   }

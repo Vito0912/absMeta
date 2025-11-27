@@ -103,7 +103,7 @@ export default class BookBeatProvider extends BaseProvider {
     return normalizeBookMetadata({
       title: book.title,
       author: book.author || book._embedded?.contributors?.find((c) => c.role === 'bb-author')?.displayname,
-      description: book.description,
+      description: book.description ? book.description.replace(/<br\s*\/?>/gi, '\n') : undefined,
       cover: book.image,
       isbn: book.audiobookisbn || book.ebookisbn,
       series: book.series ? [{ series: book.series.name, sequence: book.series.displaypartnumber }] : undefined,
