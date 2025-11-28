@@ -8,5 +8,7 @@ services:
     environment:
       - NODE_ENV=production
       - HARDCOVER_TOKEN=${HARDCOVER_TOKEN}
+      # See https://lazylibrarian.gitlab.io/config_importing/
+      - GOODREADS_API_KEY=${GOODREADS_API_KEY}
     volumes:
       - ./data:/app/data
