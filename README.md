@@ -80,6 +80,9 @@ curl "http://localhost:3000/librivox/search?title=sherlock+holmes&author=doyle"
 > \
 > Example:
 > `http://localhost:3000/librivox/limit:10/search?title=sherlock+holmes&author=doyle`
+>
+> For **ABS**! do not add `/search` at the end. Just use:\
+> `http://localhost:3000/librivox/limit:10
 
 ## Configuration
 

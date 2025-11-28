@@ -50,6 +50,16 @@ Total Providers: 9
 GET /ardaudiothek/search?title=example&author=author
 ```
 
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/ardaudiothek
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
+
 ### Comments
 
 - German language only provider.
@@ -99,6 +109,16 @@ GET /ardaudiothek/search?title=example&author=author
 GET /audioteka/lang:pl/search?title=example&author=author
 ```
 
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/audioteka/lang:pl
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
+
 ### Comments
 
 - Credits https://github.com/lakafior/audioteka-abs for the original implementation.
@@ -141,6 +161,16 @@ GET /audioteka/lang:pl/search?title=example&author=author
 GET /bigfinish/search?title=example&author=author
 ```
 
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/bigfinish
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
+
 ---
 
 ## BookBeat
@@ -181,6 +211,16 @@ GET /bigfinish/search?title=example&author=author
 ```
 GET /bookbeat/market:austria/search?title=example&author=author
 ```
+
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/bookbeat/market:austria
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
 
 ### Comments
 
@@ -225,6 +265,16 @@ GET /bookbeat/market:austria/search?title=example&author=author
 GET /goodreads/search?title=example&author=author
 ```
 
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/goodreads
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
+
 ### Comments
 
 - Covers may be low quality or missing due to API limitations
@@ -267,6 +317,16 @@ GET /goodreads/search?title=example&author=author
 ```
 GET /graphicaudio/search?title=example&author=author
 ```
+
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/graphicaudio
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
 
 ### Comments
 
@@ -313,6 +373,16 @@ GET /graphicaudio/search?title=example&author=author
 GET /hardcover/search?title=example&author=author
 ```
 
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/hardcover
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
+
 ### Comments
 
 - The searching seems to be a bit broken, not finding results that exist.
@@ -352,6 +422,16 @@ GET /hardcover/search?title=example&author=author
 ```
 GET /librivox/search?title=example&author=author
 ```
+
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/librivox
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
 
 ### Comments
 
@@ -403,6 +483,16 @@ GET /librivox/search?title=example&author=author
 ```
 GET /storytel/language:en/search?title=example&author=author
 ```
+
+### Add to Audiobookshelf
+
+```
+https://provider.vito0912.de/storytel/language:en
+```
+
+Under "Auth" use `abs`
+
+> The URL can be replaced by your own deployment. The hosted provider can break at any moment.
 
 ### Comments
 
