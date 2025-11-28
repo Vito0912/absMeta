@@ -5,55 +5,19 @@ import { dbManager } from '../../database/manager'
 import { httpClient } from '../../utils/httpClient'
 import path from 'path'
 import fs from 'fs'
+import {
+  ArdProgramSet,
+  ArdProgramSetSearchResponse,
+  ArdSearchResponse,
+  ArdSearchType,
+  ArdSearchProgramSet,
+  ArdSearchItem
+} from './types'
 
 const configPath = path.join(__dirname, 'config.json')
 const config: ProviderConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
 
-const ARD_API_URL = 'https://api.ardaudiothek.de/search/programsets'
-
-interface ArdImage {
-  url?: string
-  url1X1?: string
-  attribution?: string
-  description?: string
-}
-
-interface ArdPublicationService {
-  id?: string
-  title?: string
-  organizationName?: string
-  genre?: string
-  brandingColor?: string
-}
-
-interface ArdEditorialCategory {
-  id?: string
-  title?: string
-}
-
-interface ArdProgramSet {
-  id?: string
-  title?: string
-  numberOfElements?: number
-  synopsis?: string
-  sharingUrl?: string
-  image?: ArdImage
-  publicationService?: ArdPublicationService
-  editorialCategories?: {
-    nodes?: ArdEditorialCategory[]
-  }
-}
-
-interface ArdSearchResponse {
-  data?: {
-    search?: {
-      programSets?: {
-        numberOfElements?: number
-        nodes?: ArdProgramSet[]
-      }
-    }
-  }
-}
+const ARD_API_BASE = 'https://api.ardaudiothek.de'
 
 export default class ArdAudiothekProvider extends BaseProvider {
   constructor() {
@@ -68,8 +32,149 @@ export default class ArdAudiothekProvider extends BaseProvider {
   ): Promise<BookMetadata[]> {
     const limit = Math.min((params.limit as number) || 5, 20)
     const skipCache = options?.skipCache === true
+    const searchType = (params.searchType as ArdSearchType) || 'search'
 
-    const searchUrl = `${ARD_API_URL}?query=${encodeURIComponent(title)}`
+    if (searchType === 'programsets') {
+      return this.searchProgramSets(title, author, limit, skipCache)
+    }
+
+    return this.searchGeneral(title, author, limit, skipCache)
+  }
+
+  private async searchGeneral(
+    title: string,
+    author: string | null,
+    limit: number,
+    skipCache: boolean
+  ): Promise<BookMetadata[]> {
+    const searchUrl = `${ARD_API_BASE}/search?query=${encodeURIComponent(title)}&offset=0&limit=${limit}`
+
+    let searchJson: ArdSearchResponse | null = null
+
+    if (!skipCache) {
+      const searchCache = dbManager.getSearchCache(this.config.id, title, author, searchUrl)
+      if (searchCache) {
+        try {
+          searchJson = JSON.parse(searchCache) as ArdSearchResponse
+        } catch {}
+      }
+    }
+
+    if (!searchJson) {
+      const searchRes = await httpClient.get(searchUrl)
+      if (searchRes.status !== 200) {
+        throw new Error(`ARD Audiothek API error: ${searchRes.status}`)
+      }
+      searchJson = searchRes.data as ArdSearchResponse
+
+      if (!skipCache) {
+        dbManager.setSearchCache(this.config.id, title, author, searchUrl, JSON.stringify(searchJson))
+      }
+    }
+
+    return this.mapGeneralSearchResults(searchJson, limit)
+  }
+
+  private mapGeneralSearchResults(searchJson: ArdSearchResponse, limit: number): BookMetadata[] {
+    const books: BookMetadata[] = []
+    const search = searchJson.data?.search
+
+    const programSets = search?.programSets?.nodes
+    if (programSets) {
+      for (const item of programSets) {
+        const metadata = this.mapSearchProgramSetToMetadata(item)
+        if (metadata.title) {
+          books.push(metadata)
+        }
+      }
+    }
+
+    const items = search?.items?.nodes
+    if (items) {
+      for (const item of items) {
+        const metadata = this.mapSearchItemToMetadata(item)
+        if (metadata.title) {
+          books.push(metadata)
+        }
+      }
+    }
+
+    return books.slice(0, limit)
+  }
+
+  private mapSearchProgramSetToMetadata(item: ArdSearchProgramSet): BookMetadata {
+    const imageUrl = item.image?.url1X1?.replace('{width}', '1200') || item.image?.url?.replace('{width}', '1200')
+    const { cleanTitle, authorName } = this.parseTitle(item.title || '')
+
+    const genres: string[] = []
+    if (item.publicationService?.genre) {
+      genres.push(item.publicationService.genre)
+    }
+
+    const tags: string[] = []
+    if (item.editorialCategories?.nodes) {
+      for (const category of item.editorialCategories.nodes) {
+        if (category.title) {
+          tags.push(category.title.trim())
+        }
+      }
+    }
+
+    return normalizeBookMetadata({
+      title: cleanTitle,
+      author: authorName,
+      description: item.synopsis,
+      cover: imageUrl,
+      publisher: item.publicationService?.organizationName || 'ARD',
+      genres: genres.length > 0 ? genres : undefined,
+      tags: tags.length > 0 ? tags : undefined,
+      language: 'de'
+    })
+  }
+
+  private mapSearchItemToMetadata(item: ArdSearchItem): BookMetadata {
+    const imageUrl = item.image?.url1X1?.replace('{width}', '1200') || item.image?.url?.replace('{width}', '1200')
+    const { cleanTitle, authorName } = this.parseTitle(item.title || '')
+
+    const genres: string[] = []
+    if (item.programSet?.publicationService?.genre) {
+      genres.push(item.programSet.publicationService.genre)
+    }
+
+    const tags: string[] = []
+    if (item.programSet?.editorialCategories?.nodes) {
+      for (const category of item.programSet.editorialCategories.nodes) {
+        if (category.title) {
+          tags.push(category.title.trim())
+        }
+      }
+    }
+
+    const series = item.programSet?.title
+      ? [{ series: item.programSet.title, sequence: undefined }]
+      : undefined
+
+    return normalizeBookMetadata({
+      title: cleanTitle,
+      author: authorName,
+      description: item.synopsis,
+      cover: imageUrl,
+      publisher: item.programSet?.publicationService?.organizationName || 'ARD',
+      genres: genres.length > 0 ? genres : undefined,
+      tags: tags.length > 0 ? tags : undefined,
+      series: series,
+      duration: item.duration,
+      language: 'de'
+    })
+  }
+
+  private async searchProgramSets(
+    title: string,
+    author: string | null,
+    limit: number,
+    skipCache: boolean
+  ): Promise<BookMetadata[]> {
+    const searchUrl = `${ARD_API_BASE}/search/programsets?query=${encodeURIComponent(title)}`
 
     let searchResults: ArdProgramSet[] = []
 
@@ -77,7 +182,7 @@ export default class ArdAudiothekProvider extends BaseProvider {
       const searchCache = dbManager.getSearchCache(this.config.id, title, author, searchUrl)
       if (searchCache) {
         try {
-          const parsed = JSON.parse(searchCache) as ArdSearchResponse
+          const parsed = JSON.parse(searchCache) as ArdProgramSetSearchResponse
           searchResults = parsed.data?.search?.programSets?.nodes || []
         } catch {}
       }
@@ -88,7 +193,7 @@ export default class ArdAudiothekProvider extends BaseProvider {
       if (searchRes.status !== 200) {
         throw new Error(`ARD Audiothek API error: ${searchRes.status}`)
       }
-      const searchJson = searchRes.data as ArdSearchResponse
+      const searchJson = searchRes.data as ArdProgramSetSearchResponse
       searchResults = searchJson.data?.search?.programSets?.nodes || []
 
       if (!skipCache) {
@@ -109,34 +214,7 @@ export default class ArdAudiothekProvider extends BaseProvider {
   }
 
   private mapArdToMetadata(item: ArdProgramSet): BookMetadata {
-    let rawTitle = item.title || ''
-    rawTitle = rawTitle.replace(/[„"""\u201c\u201d\u201e\u201f»«]/g, '').trim()
-
-    let authorName: string | undefined
-    let cleanTitle = rawTitle
-
-    if (rawTitle.includes(' von ')) {
-      const parts = rawTitle.split(' von ')
-      if (parts.length > 1) {
-        cleanTitle = parts[0].trim()
-        authorName = parts[1].trim()
-      }
-    } else if (rawTitle.includes(': ')) {
-      const parts = rawTitle.split(': ')
-      if (parts.length > 1) {
-        const potentialAuthor = parts[0].trim()
-        if (potentialAuthor.length < 50 && !this.looksLikeTitle(potentialAuthor)) {
-          authorName = potentialAuthor
-          cleanTitle = parts.slice(1).join(': ').trim()
-        }
-      }
-    } else if (rawTitle.includes(' - ')) {
-      const parts = rawTitle.split(' - ')
-      if (parts.length === 2) {
-        cleanTitle = parts[0].trim()
-        authorName = parts[1].trim()
-      }
-    }
+    const { cleanTitle, authorName } = this.parseTitle(item.title || '')
 
     const description = item.synopsis
 
@@ -183,6 +261,37 @@ export default class ArdAudiothekProvider extends BaseProvider {
       series: series,
       language: 'de'
     })
+  }
+
+  private parseTitle(rawTitle: string): { cleanTitle: string; authorName?: string } {
+    const cleaned = rawTitle.replace(/[„"""\u201c\u201d\u201e\u201f»«]/g, '').trim()
+    let authorName: string | undefined
+    let cleanTitle = cleaned
+
+    if (cleaned.includes(' von ')) {
+      const parts = cleaned.split(' von ')
+      if (parts.length > 1) {
+        cleanTitle = parts[0].trim()
+        authorName = parts[1].trim()
+      }
+    } else if (cleaned.includes(': ')) {
+      const parts = cleaned.split(': ')
+      if (parts.length > 1) {
+        const potentialAuthor = parts[0].trim()
+        if (potentialAuthor.length < 50 && !this.looksLikeTitle(potentialAuthor)) {
+          authorName = potentialAuthor
+          cleanTitle = parts.slice(1).join(': ').trim()
+        }
+      }
+    } else if (cleaned.includes(' - ')) {
+      const parts = cleaned.split(' - ')
+      if (parts.length === 2) {
+        cleanTitle = parts[0].trim()
+        authorName = parts[1].trim()
+      }
+    }
+
+    return { cleanTitle, authorName }
   }
 
   private looksLikeTitle(str: string): boolean {

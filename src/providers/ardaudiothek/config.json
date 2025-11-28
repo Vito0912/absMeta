@@ -14,6 +14,15 @@
         "max": 20
       },
       "description": "Maximum number of results to return (default: 5, max: 20)"
+    },
+    {
+      "name": "searchType",
+      "required": false,
+      "validation": {
+        "type": "enum",
+        "values": ["search", "programsets"]
+      },
+      "description": "Search type: 'search' (default) for general search (preferred for single items) or 'programsets' for program set specific search (preferred for podcasts)"
     }
   ],
   "returnedFields": [

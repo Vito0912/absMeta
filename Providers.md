@@ -31,6 +31,7 @@ Total Providers: 9
 | Name | Type | Validation | Description |
 |------|------|------------|-------------|
 | `limit` | int | 1-20 | Maximum number of results to return (default: 5, max: 20) |
+| `searchType` | enum | [search, programsets] | Search type: 'search' (default) for general search (preferred for single items) or 'programsets' for program set specific search (preferred for podcasts) |
 
 ### Returned Fields
 
