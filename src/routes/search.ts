@@ -3,7 +3,7 @@ import { dbManager } from '../database/manager'
 import { createParametersHash } from '../utils/helpers'
 
 export async function searchHandler(req: Request, res: Response): Promise<void> {
-  const { title, author } = req.query
+  let { title, query, author } = req.query
   const { provider, parsedParams } = req
 
   if (!provider || !parsedParams) {
@@ -11,6 +11,7 @@ export async function searchHandler(req: Request, res: Response): Promise<void> 
     return
   }
 
+  if (!title) title = query
   if (!title || typeof title !== 'string') {
     res.status(400).json({ error: 'Missing required query parameter: title' })
     return
