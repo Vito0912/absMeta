@@ -22,6 +22,8 @@ RUN npm ci --omit=dev && \
 
 COPY --from=builder /app/dist ./dist
 
+RUN mkdir -p /app/data && chown -R node:node /app
+
 ENV NODE_ENV=production
 
 EXPOSE 3000

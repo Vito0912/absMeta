@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import { pathToFileURL } from 'url'
 import { BaseProvider } from './BaseProvider'
 import { ProviderConfig } from '../types'
 
@@ -37,7 +36,10 @@ export class ProviderRegistry {
     for (const dir of providerDirs) {
       const providerPath = path.join(providersDir, dir)
       const configPath = path.join(providerPath, 'config.json')
-      const indexPath = path.join(providerPath, 'index.ts')
+
+      const indexJsPath = path.join(providerPath, 'index.js')
+      const indexTsPath = path.join(providerPath, 'index.ts')
+      const indexPath = fs.existsSync(indexJsPath) ? indexJsPath : indexTsPath
 
       if (!fs.existsSync(configPath)) {
         console.warn(`No config.json found for provider: ${dir}`)
@@ -45,7 +47,7 @@ export class ProviderRegistry {
       }
 
       if (!fs.existsSync(indexPath)) {
-        console.warn(`No index.ts found for provider: ${dir}`)
+        console.warn(`No index.js or index.ts found for provider: ${dir}`)
         continue
       }
 
@@ -68,7 +70,7 @@ export class ProviderRegistry {
           continue
         }
 
-        const providerModule = await import(pathToFileURL(indexPath).href)
+        const providerModule = require(indexPath)
         const ProviderClass = providerModule.default || providerModule.Provider
 
         if (!ProviderClass) {
