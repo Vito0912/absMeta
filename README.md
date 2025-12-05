@@ -38,7 +38,7 @@ This unifies many existing audiobook metadata providers into a single server:
 docker run -d \
   -p 3000:3000 \
   -v ./data:/app/data \
-  ghcr.io/vito0912/absmeta:latest
+  ghcr.io/vito0912/abs-agg:latest
 ```
 
 Or with docker-compose:

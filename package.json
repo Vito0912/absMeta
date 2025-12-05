@@ -1,6 +1,6 @@
 {
-  "name": "absmetadata",
-  "version": "1.0.0",
+  "name": "abs-agg",
+  "version": "0.0.2",
   "description": "Metadata provider framework for Audiobookshelf",
   "main": "dist/index.js",
   "scripts": {

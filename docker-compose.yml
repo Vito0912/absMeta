@@ -1,7 +1,7 @@
 services:
-  absmetadata:
+  abs-agg:
     build: .
-    container_name: ghcr.io/vito0912/absMeta
+    container_name: ghcr.io/vito0912/abs-agg
     restart: unless-stopped
     ports:
       - "3000:3000"
