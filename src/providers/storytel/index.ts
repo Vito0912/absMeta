@@ -177,7 +177,7 @@ export default class StorytelProvider extends BaseProvider {
       params.type === 'ebook'
         ? (book.largeCoverE || book.coverE || book.largeCover || book.cover)?.replace(/\d{3}x\d{3}/, '1200x1200')
         : (book.largeCover || book.cover || book.largeCoverE || book.coverE)?.replace(/\d{3}x\d{3}/, '1200x1200')
-    const duration = abook?.length ? Math.round(abook.length / 1000) : undefined
+    const duration = abook?.length ? Math.round(abook.length / 1000 / 60) : undefined
 
     const narrators = abook?.narrators?.map((n) => n.name).join(', ') || abook?.narratorAsString
 
