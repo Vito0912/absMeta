@@ -1,7 +1,8 @@
 services:
   abs-agg:
     build: .
-    container_name: ghcr.io/vito0912/abs-agg
+    container_name: abs-agg
+    image: ghcr.io/vito0912/abs-agg:dev
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -12,3 +13,6 @@ services:
       - GOODREADS_API_KEY=${GOODREADS_API_KEY}
     volumes:
       - ./data:/app/data
+    # This container runs by default as 1000:1000 user.
+    # If you did not create the data folder, yet and run the docker daemon as another user/root, either set the permissions of the data folder accordingly (1000:1000) or adjust the user here.
+    # user: 0:0
