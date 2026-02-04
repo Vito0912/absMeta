@@ -5,7 +5,7 @@ import { ParsedParameters } from '../types'
 
 export function parseProviderParams(req: Request, res: Response, next: NextFunction): void {
   const { providerId, params } = req.params
-  const provider = providerRegistry.get(providerId)
+  const provider = providerRegistry.get(providerId as string)
 
   if (!provider) {
     res.status(404).json({ error: `Provider not found: ${providerId}` })

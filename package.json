@@ -4,7 +4,7 @@
   "description": "Metadata provider framework for Audiobookshelf",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && for dir in src/providers/*/; do name=$(basename $dir); mkdir -p dist/providers/$name && cp $dir/config.json dist/providers/$name/ 2>/dev/null; done; true",
+    "build": "tsc && for dir in src/providers/*/; do name=$(basename $dir); mkdir -p dist/providers/$name && cp $dir/config.json dist/providers/$name/ 2>/dev/null; done",
     "dev": "tsx src/index.ts",
     "dev:watch": "tsx watch src",
     "start": "node dist/index.js",
